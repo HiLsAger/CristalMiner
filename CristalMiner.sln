@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1022
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CristalMiner", "CristalMiner\CristalMiner.csproj", "{D5005B4A-0E08-4244-87BC-F11905DD074F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D5005B4A-0E08-4244-87BC-F11905DD074F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5005B4A-0E08-4244-87BC-F11905DD074F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5005B4A-0E08-4244-87BC-F11905DD074F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5005B4A-0E08-4244-87BC-F11905DD074F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {450EA6FC-CF61-4C8B-9AA7-ED16FB22EF84}
+	EndGlobalSection
+EndGlobal
