@@ -7,17 +7,17 @@ using System.Drawing;
 
 namespace CristalMiner
 {
-    class UI
+    public class UI
     {
-        float scale;
+        public float scale;
         public Entity healthBar;
         public Entity healths;
 
         public Entity energyBar;
         public Entity energys;
-        int MaxHealthBarSize;
-        int MaxEnegryBarSize;
-        List<Entity> arrmor = new List<Entity>();
+        public int MaxHealthBarSize;
+        public int MaxEnegryBarSize;
+        public List<Entity> arrmor = new List<Entity>();
 
         public UI(float scale)
         {

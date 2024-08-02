@@ -1,28 +1,29 @@
-﻿using System;
+﻿using CristalMiner.Asteroids;
+using CristalMiner.player.ship;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CristalMiner
 {
     public partial class StarMiner : Form
     {
-        Ship ship;
-        Background background;
-        Random rand = new Random();
-        List<Bitmap> frames = new List<Bitmap>();
-        UI ui;
+        public ShipController ship;
+        public Background background;
+        public Random rand = new Random();
+        public List<Bitmap> frames = new List<Bitmap>();
+        public UI ui;
 
-        int score;
+        public int score;
 
-        Asteroid asteroid;
+        public AsteroidsController asteroid;
 
-        Animation anim;
+        public Animation anim;
+
+        private Cursor customCursor;
 
         public StarMiner()
         {
@@ -32,39 +33,38 @@ namespace CristalMiner
 
             Global.setWindow(this.ClientSize.Width, this.ClientSize.Height);
         }
-        private Cursor customCursor;
+
         private void Form1_Load(object sender, EventArgs e)
         {
-            background = new Background(Color.Black, 70);
-            background.CreateLocation();
+            this.background = new Background(Color.Black, 70);
+            this.background.CreateLocation();
 
-            customCursor = new Cursor("Resourse/Cursor.cur");
-            this.Cursor = customCursor;
+            using (MemoryStream cursorStream = new MemoryStream(Properties.Resources.Cursor))
+            {
+                this.Cursor = new Cursor(cursorStream);
+            }
 
-            ship = new Ship(280, 600, 40, 80, 2, 0, 0, Properties.Resources.Roket, 91, 100);
-            asteroid = new Asteroid(5, 40, 70);
+            this.ship = new ShipController(280, 600, 40, 80, 2, 0, 0, Properties.Resources.Roket, 91, 100);
 
-            ui = new UI(1);
-            ui.SetHealthBar(200, 20, 35, Global.Height - 60, Properties.Resources.HealthBar);
+            this.asteroid = new AsteroidsController(5, 40, 70);
 
-            ui.setEnergyBar(20, 200, 35, Global.Height - 300, Properties.Resources.EnergyBar);
+            this.ui = new UI(1);
+            this.ui.SetHealthBar(200, 20, 35, Global.Height - 60, Properties.Resources.HealthBar);
 
-            ship.alive = true;
+            this.ui.setEnergyBar(20, 200, 35, Global.Height - 300, Properties.Resources.EnergyBar);
 
-            //anim = new Animation("Resourse/Animations/fire", new Rectangle(0,0, 40, 40));
+            this.ship.alive = true;
 
-
-            //System.Media. sp = new System.Media("Resourse/sounds/music/DJ Artyom - Cooper.wav");
-            //sp.
+            this.anim = new Animation("Resourse/Animations/fire", new Rectangle(0,0, 40, 40));
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            Graphics g = e.Graphics;
+            Graphics graphics = e.Graphics;
             //g.DrawImage(anim.GetImage(), new Rectangle(ship.x, ship.y + ship.height - 10, 40, 40));
             background.Draw(sender, e);
-            asteroid.Draw(sender, e);
-            ship.Draw(sender, e);
+            asteroid.Draw(graphics);
+            ship.Draw(graphics);
             ui.Draw(sender, e);
         }
 
@@ -108,42 +108,48 @@ namespace CristalMiner
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.A)    //Movement
-                Global.Horizontal = -1;
-            if (e.KeyCode == Keys.D)
-                Global.Horizontal = 1;
-            if (e.KeyCode == Keys.W)
-                Global.Vertical = -1;
-            if (e.KeyCode == Keys.S)
-                Global.Vertical = 1;
-            if (e.KeyCode == Keys.T)
-                if (Global.console = true)
-                {
+            switch (e.KeyCode)
+            {
+                case Keys.A:
+                    Global.Horizontal = -1;
+                    break;
+                case Keys.D:
+                    Global.Horizontal = 1;
+                    break;
+                case Keys.W:
+                    Global.Vertical = -1;
+                    break;
+                case Keys.S:
+                    Global.Vertical = 1;
+                    break;
+                case Keys.Escape:
+                    Application.Exit();
+                    break;
 
-                }
-                else
-                {
-
-                }
-
-
-            if (e.KeyCode == Keys.Escape)
-                Application.Exit();
+            }
         }
 
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.A)        //Movement
-                Global.Horizontal = 0;
-            else if (e.KeyCode == Keys.D)
-                Global.Horizontal = 0;
-            if (e.KeyCode == Keys.W)
-                Global.Vertical = 0;
-            else if (e.KeyCode == Keys.S)
-                Global.Vertical = 0;
+            switch (e.KeyCode)
+            {
+                case Keys.A:
+                    Global.Horizontal = 0;
+                    break;
+                case Keys.D:
+                    Global.Horizontal = 0;
+                    break;
+                case Keys.W:
+                    Global.Vertical = 0;
+                    break;
+                case Keys.S:
+                    Global.Vertical = 0;
+                    break;
+                case Keys.Space:
+                    ship.Fire();
+                    break;
 
-            if (e.KeyCode == Keys.Space)    //Fire
-                ship.Fire();
+            }
         }
 
         private void AnimatorUpdate_Tick(object sender, EventArgs e)

@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace CristalMiner
 {
-    class Background
+    public class Background
     {
         public Color Back_Color;
         public List<Entity> stars = new List<Entity>();

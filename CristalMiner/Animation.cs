@@ -9,11 +9,7 @@ using System.Timers;
 
 namespace CristalMiner
 {
-    class Animator
-    {
-
-    }
-    class Animation
+    public class Animation
     {
         private List<string> Timages = new List<string>();
         private List<Bitmap> images = new List<Bitmap>();
@@ -23,20 +19,33 @@ namespace CristalMiner
         private Rectangle rect;
         public Animation(string path, Rectangle Rect)
         {
-            rect = Rect;
-            GetImage(path, rect);
-            timer.Elapsed += Ticker;
+            this.rect = Rect;
+            this.GetImage(path, rect);
+            this.timer.Elapsed += Ticker;
         }
 
+        /**
+         * TODO Добавить debug
+         */
         private void GetImage(string path, Rectangle rect)
         {
-            List<string> files = new List<string>();
+            if (!Directory.Exists(path)) {
+                return;
+            }
+
+            string[] files = Directory.GetFiles(path);
+
+            if (files.Length <= 0) {
+                return;
+            }
+
             foreach (string item in Directory.GetFiles(path))
             {
                 if (Path.GetExtension(item) == ".png")
                     images.Add(ShrinkImage(new Bitmap(item), 1));
             }
         }
+
         private Bitmap SqueezeImage(string path, Rectangle rect)
         {
             //Bitmap orgBitmap = new Bitmap(path);
@@ -67,13 +76,13 @@ namespace CristalMiner
 
         public Image GetImage()
         {
-            if (timer.Enabled == true)
+           /* if (timer.Enabled == true)
             {
                 Bitmap b = new Bitmap(images[number]);
                 return b;
             }
-            else
-                return def;
+            else*/
+            return def;
         }
 
         public void nextFrame()
