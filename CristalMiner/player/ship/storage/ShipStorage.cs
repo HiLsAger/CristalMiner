@@ -3,9 +3,4 @@
     public static class ShipStorage
     {
     }
-
-    public bool isAlive()
-    {
-
-    }
 }
